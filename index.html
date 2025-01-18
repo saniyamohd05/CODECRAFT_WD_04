@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floral Gaming Portfolio</title>
+    <style>
+        :root {
+            --background: #0a0a0a;
+            --foreground: #ffffff;
+            --accent: #ff3232;
+            --secondary: #32a852;
+            --tertiary: #c864c8;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes sway {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes bloom {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: var(--foreground);
+            background-color: var(--background);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: var(--foreground);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--tertiary);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            background-color: var(--tertiary);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4rem;
+            color: var(--background);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .projects {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .projects h2 {
+            font-size: 2rem;
+            color: var(--tertiary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--tertiary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(200, 100, 200, 0.3);
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            color: var(--tertiary);
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            color: var(--foreground);
+            margin-bottom: 1rem;
+        }
+
+        .project-card a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .project-card a:hover {
+            text-decoration: underline;
+        }
+
+        .floral-symbol {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.5;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .contact h2 {
+            font-size: 2rem;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--tertiary);
+            border-radius: 4px;
+            color: var(--foreground);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background-color: var(--tertiary);
+            color: var(--background);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .profile-pic {
+                width: 150px;
+                height: 150px;
+                font-size: 3rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Floral Gaming Realm</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero container">
+            <h1>Welcome to the Floral Gaming Realm</h1>
+            <p>Crafting immersive gaming experiences in a world where nature and technology intertwine.</p>
+            <div class="profile-pic">🎮</div>
+        </section>
+
+        <section id="projects" class="projects container">
+            <h2>Featured Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Floral Souls</h3>
+                    <p>A challenging action RPG set in a dark, flower-filled fantasy world</p>
+                    <a href="#" class="project-link">Explore Game</a>
+                    <span class="floral-symbol" style="top: 10px; right: 10px;">🌹</span>
+                </div>
+                <div class="project-card">
+                    <h3>Cyberpetal 2077</h3>
+                    <p>An open-world RPG set in a dystopian future overrun by sentient plants</p>
+                    <a href="#" class="project-link">Explore Game</a>
+                    <span class="floral-symbol" style="bottom: 10px; left: 10px;">🌷</span>
+                </div>
+                <div class="project-card">
+                    <h3>Blossom Ring</h3>
+                    <p>An epic fantasy action-RPG where you battle corrupted garden spirits</p>
+                    <a href="#" class="project-link">Explore Game</a>
+                    <span class="floral-symbol" style="top: 10px; left: 10px;">🌸</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact container">
+            <h2>Join Our Floral Gaming Community</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Add floral symbols to the background
+        function addFloralSymbols() {
+            const symbols = ['🌸', '🌹', '🌷', '🌺', '🌻', '💮'];
+            const body = document.body;
+            const symbolCount = 20;
+
+            for (let i = 0; i < symbolCount; i++) {
+                const symbol = document.createElement('span');
+                symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                symbol.style.position = 'fixed';
+                symbol.style.left = `${Math.random() * 100}vw`;
+                symbol.style.top = `${Math.random() * 100}vh`;
+                symbol.style.fontSize = `${Math.random() * 20 + 10}px`;
+                symbol.style.opacity = '0.2';
+                symbol.style.pointerEvents = 'none';
+                symbol.style.animation = `sway ${Math.random() * 5 + 5}s ease-in-out infinite`;
+                body.appendChild(symbol);
+            }
+        }
+
+        // Animate project cards on hover
+        function setupProjectCards() {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const symbol = card.querySelector('.floral-symbol');
+                    symbol.style.transform = 'scale(1.2) rotate(15deg)';
+                    symbol.style.opacity = '1';
+                });
+                card.addEventListener('mouseleave', () => {
+                    const symbol = card.querySelector('.floral-symbol');
+                    symbol.style.transform = 'scale(1) rotate(0deg)';
+                    symbol.style.opacity = '0.5';
+                });
+            });
+        }
+
+        // Handle form submission
+        function setupContactForm() {
+            const form = document.getElementById('contact-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would typically send this data to a server
+                console.log('Form submitted:', { name, email, message });
+                
+                // For this example, we'll just show an alert
+                alert('Thank you for your message! We will get back to you soon.');
+                form.reset();
+            });
+        }
+
+        // Initialize everything when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            addFloralSymbols();
+            setupProjectCards();
+            setupContactForm();
+        });
+    </script>
+</body>
+</html>
