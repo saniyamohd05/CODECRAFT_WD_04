@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Floral Gaming Portfolio</title>
+    <title>Saniya Mohd's Portfolio</title>
     <style>
         :root {
             --background: #0a0a0a;
@@ -45,39 +45,46 @@
             padding: 0 20px;
         }
 
-        header {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333; /* Dark grey color */
+    z-index: 1000;
+    transition: top 0.3s;
+}
 
-        nav ul {
-            display: flex;
-            list-style-type: none;
-            padding: 0;
-        }
+/* Initially hide the navbar */
+.navbar.hidden {
+    top: -100px; /* Adjust this value based on the height of your navbar */
+}
 
-        nav ul li {
-            margin-left: 20px;
-        }
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        nav ul li a {
-            color: var(--foreground);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
 
-        nav ul li a:hover {
-            color: var(--tertiary);
-        }
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: var(--foreground);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--tertiary);
+}
 
         .logo {
             font-size: 1.5rem;
@@ -261,20 +268,19 @@
 </head>
 <body>
     <header>
-        <nav class="container">
-            <div class="logo">Floral Gaming Realm</div>
+        <nav class="container navbar">
+            <div class="logo">Saniya Mohd's Portfolio</div>
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-    </header>
+    </header>    
 
     <main>
         <section id="home" class="hero container">
-            <h1>Welcome to the Floral Gaming Realm</h1>
-            <p>Crafting immersive gaming experiences in a world where nature and technology intertwine.</p>
+            <h1>Welcome to my Portfolio</h1>
             <div class="profile-pic">🎮</div>
         </section>
 
@@ -384,6 +390,19 @@
             setupProjectCards();
             setupContactForm();
         });
+        document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.querySelector('.navbar');
+    const scrollThreshold = 10; // Adjust this value based on your preference
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > scrollThreshold) {
+            navbar.classList.add('hidden');
+        } else {
+            navbar.classList.remove('hidden');
+        }
+    });
+});
+
     </script>
 </body>
 </html>
