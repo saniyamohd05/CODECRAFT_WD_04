@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saniya Mohd's Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --background: #0a0a0a;
             --foreground: #ffffff;
-            --accent: #ff3232;
-            --secondary: #32a852;
-            --tertiary: #c864c8;
+            --accent: #ff69b4;
+            --secondary: #ff99cc;
+            --tertiary: #ffb6c1;
+            --gradient: linear-gradient(135deg, var(--accent), var(--secondary));
         }
 
         * {
@@ -21,11 +22,24 @@
         }
 
         body {
-            font-family: 'Montserrat', Arial, sans-serif;
+            font-family: 'Quicksand', sans-serif;
             color: var(--foreground);
             background-color: var(--background);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Flower Sparkle Animation */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: sparkleFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes sparkleFloat {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(100px, -100px) rotate(360deg); opacity: 0; }
         }
 
         .container {
@@ -39,7 +53,8 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(10, 10, 10, 0.8);
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
             z-index: 1000;
             transition: transform 0.3s ease-in-out;
         }
@@ -55,294 +70,231 @@
             padding: 1rem 0;
         }
 
-        nav ul {
-            display: flex;
-            list-style-type: none;
+        .logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+            transition: transform 0.3s ease;
         }
 
-        nav ul li {
-            margin-left: 20px;
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
         }
 
         nav ul li a {
             color: var(--foreground);
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        nav ul li a:hover {
-            color: var(--tertiary);
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
         }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent);
+        nav ul li a:hover::after {
+            width: 100%;
         }
 
         .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 8rem 0 6rem;
+            padding: 6rem 1rem;
             position: relative;
             overflow: hidden;
         }
 
         .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: clamp(2.5rem, 8vw, 4rem);
             color: var(--accent);
             margin-bottom: 1rem;
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeInUp 1s forwards;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s 0.5s forwards;
+            animation: fadeInUp 1s ease forwards;
         }
 
         .profile-pic {
             width: 200px;
             height: 200px;
-            background-color: var(--tertiary);
+            background: var(--gradient);
             border-radius: 50%;
-            display: inline-flex;
+            display: flex;
             justify-content: center;
             align-items: center;
             font-size: 4rem;
-            color: var(--background);
-            animation: float 3s ease-in-out infinite;
-            opacity: 0;
-            transform: scale(0.8);
-            animation: scaleIn 1s 1s forwards, float 3s ease-in-out 2s infinite;
-        }
-
-        .skills, .achievements, .projects {
-            padding: 4rem 0;
+            margin: 2rem 0;
             position: relative;
+            animation: float 6s ease-in-out infinite;
         }
 
-        .skills h2, .achievements h2, .projects h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--tertiary);
-            text-align: center;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
+        .profile-pic::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+            filter: blur(15px);
+            opacity: 0.5;
+            z-index: -1;
         }
 
         .skill-grid, .achievement-grid, .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            padding: 2rem 0;
         }
 
         .skill-card, .achievement-card, .project-card {
-            background-color: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--tertiary);
-            border-radius: 8px;
-            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 105, 180, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(20px);
         }
 
+        .skill-card.fade-in, .achievement-card.fade-in, .project-card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .skill-card:hover, .achievement-card:hover, .project-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(200, 100, 200, 0.3);
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
         }
 
-        .skill-card h3, .achievement-card h3, .project-card h3 {
-            font-size: 1.5rem;
-            color: var(--tertiary);
-            margin-bottom: 1rem;
-        }
-
-        .skill-level {
-            height: 10px;
-            background-color: var(--secondary);
-            border-radius: 5px;
-            margin-top: 0.5rem;
-            width: 0;
-            transition: width 1s ease-in-out;
-        }
-
-        .project-card a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .project-card a:hover {
-            color: var(--tertiary);
-        }
-
-        .contact {
-            padding: 4rem 0;
-            position: relative;
-        }
-
-        .contact h2 {
-            font-family: 'Playfair Display', serif;
+        section h2 {
             font-size: 2.5rem;
             color: var(--accent);
             text-align: center;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
+            margin: 4rem 0 2rem;
+            font-family: 'Dancing Script', cursive;
         }
 
         .contact form {
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.05);
             padding: 2rem;
-            border-radius: 8px;
-            opacity: 0;
-            transform: translateY(20px);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
         }
 
         .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 0.5rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--tertiary);
-            border-radius: 4px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            border-radius: 8px;
             color: var(--foreground);
-            transition: border-color 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--accent);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.2);
         }
 
         button {
-            background-color: var(--tertiary);
-            color: var(--background);
+            background: var(--gradient);
+            color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border-radius: 4px;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
         }
 
         button:hover {
-            background-color: var(--accent);
             transform: translateY(-2px);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .social-links a {
-            color: var(--foreground);
-            font-size: 1.5rem;
-            margin: 0 1rem;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--accent);
-            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
         }
 
         footer {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: var(--foreground);
             text-align: center;
-            padding: 1rem 0;
-            position: relative;
+            padding: 2rem 0;
+            color: var(--foreground);
+            background: rgba(10, 10, 10, 0.8);
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        @keyframes scaleIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .butterfly {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23c864c8"><path d="M12 2S9 4 9 7c0 1.7.9 3 2 3.3V12H9v2h2v1.7c-1.1.3-2 1.6-2 3.3 0 3 3 5 3 5s3-2 3-5c0-1.7-.9-3-2-3.3V14h2v-2h-2v-1.7c1.1-.3 2-1.6 2-3.3 0-3-3-5-3-5z"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            opacity: 0;
-            z-index: 9999;
-        }
-
-        @keyframes flutter {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-5px) rotate(5deg); }
-            75% { transform: translateY(5px) rotate(-5deg); }
-        }
-
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.95);
+                padding: 1rem 0;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
             }
 
-            .hero p {
-                font-size: 1rem;
+            nav ul.active {
+                display: flex;
             }
 
-            .profile-pic {
-                width: 150px;
-                height: 150px;
-                font-size: 3rem;
+            .hamburger {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--foreground);
+                font-size: 1.5rem;
+                cursor: pointer;
             }
 
             .skill-grid, .achievement-grid, .project-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .skills h2, .achievements h2, .projects h2, .contact h2 {
-                font-size: 2rem;
             }
         }
     </style>
@@ -351,6 +303,7 @@
     <header class="navbar">
         <nav class="container">
             <div class="logo">Saniya Mohd</div>
+            <button class="hamburger">☰</button>
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -359,13 +312,12 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-    </header>    
-
-    <main>
+    </header>    <main>
         <section id="home" class="hero container">
             <h1>Welcome to my Portfolio</h1>
-            <div class="profile-pic">🎮</div>
-            <p>B.E. CSE @ NSAKCET | PROMPT ENGINEER | PYTHON | SQL</p>
+                <div class="profile-pic">Hello!</div>
+                <br>
+                <p>B.E. CSE @ NSAKCET | PROMPT ENGINEER | PYTHON | SQL</p>
         </section>
 
         <section id="skills" class="skills container">
@@ -373,35 +325,35 @@
             <div class="skill-grid">
                 <div class="skill-card">
                     <h3>Web Development</h3>
-                    <p>Front-end Development [HTML, CSS and JS]</p>
-                    <div class="skill-level" style="width: 0%;"></div>
+                    <p>Front-end Development[HTML,CSS and JS ]</p>
+                    <div class="skill-level" style="width: 90%;"></div>
                 </div>
                 <div class="skill-card">
                     <h3>Databases</h3>
-                    <p>MySQL, MongoDB</p>
-                    <div class="skill-level" style="width: 0%;"></div>
+                    <p>MySQL ,MongoDB</p>
+                    <div class="skill-level" style="width: 80%;"></div>
                 </div>
                 <div class="skill-card">
                     <h3>Programming</h3>
-                    <p>C#, C++, and Python</p>
-                    <div class="skill-level" style="width: 0%;"></div>
+                    <p>C#, C++, and Python </p>
+                    <div class="skill-level" style="width: 85%;"></div>
                 </div>
                 <div class="skill-card">
                     <h3>Working Languages</h3>
-                    <p>Java, JavaScript</p>
-                    <div class="skill-level" style="width: 0%;"></div>
+                    <p>Java, javascript</p>
+                    <div class="skill-level" style="width: 75%;"></div>
                 </div>
             </div>
         </section>
-
         <section id="achievements" class="achievements container">
             <h2>Achievements</h2>
             <div class="achievement-grid">
                 <div class="achievement-card">
-                    <h3>Coding Competition Participant</h3>
-                    <p>Completed coursework in Data Structures & Algorithms</p>
-                    <p>Completed course in web development conducted by IEEE</p>
+                    <h3>Participated in coding competion</h3>
+                    <p>completed coursework in DataSturctures & Algorithms </p>
+                    <p>completed couse in web development conducted by IEEE</p>
                 </div>
+                
             </div>
         </section>
 
@@ -410,23 +362,21 @@
             <div class="project-grid">
                 <div class="project-card">
                     <h3>Web Scraping Projects</h3>
-                    <p>Developed a web scraper using Python and BeautifulSoup to extract data from a popular e-commerce website. The scraper extracted product information, prices, and customer reviews, which were then stored in a MySQL database.</p>
-                    <a href="#" class="project-link">Explore Project</a>
+                    <p>Developed a web scraper using Python and BeautifulSoup to extract data from a popular e-commerce website. The scraper extracted product information, prices, and customer reviews, which were then storedin a MySQL database. </p>
+                    <a href="#" class="project-link">Explore Game</a>
                 </div>
                 <div class="project-card">
                     <h3>To-Do List</h3>
-                    <p>Designed and developed a user-friendly To-Do List app using Python and the Tkinter library, enabling users to efficiently manage their tasks and boost productivity.</p>
-                    <a href="#" class="project-link">Explore Project</a>
+                    <p>Designed and developed a user-friendly To-Do List app using Python and the Tkinter library, enabling users toefficiently manage their tasks and boost productivity </p>
+                    <a href="#" class="project-link">Explore Game</a>
                 </div>
                 <div class="project-card">
                     <h3>Blossom Ring</h3>
-                    <p>An epic fantasy action-RPG where you battle corrupted garden spirits.</p>
+                    <p>An epic fantasy action-RPG where you battle corrupted garden spirits</p>
                     <a href="#" class="project-link">Explore Game</a>
                 </div>
             </div>
-        </section>
-
-        <section id="contact" class="contact container">
+        </section><section id="contact" class="contact container">
             <h2>Get in Touch</h2>
             <form id="contact-form">
                 <div class="form-group">
@@ -456,111 +406,94 @@
         <p>&copy; 2023 Saniya Mohd. All rights reserved.</p>
     </footer>
 
+
+
+    <!-- Rest of your HTML content remains the same -->
+    <!-- Just update the sections with the same IDs and classes -->
+
     <script>
-        // Navbar scroll feature
-        let prevScrollpos = window.pageYOffset;
-        window.onscroll = function() {
-            let currentScrollPos = window.pageYOffset;
-            if (prevScrollpos > currentScrollPos) {
-                document.querySelector(".navbar").classList.remove("hidden");
-            } else {
-                document.querySelector(".navbar").classList.add("hidden");
-            }
-            prevScrollpos = currentScrollPos;
-        }
-
-        // Butterfly effect
-        function createButterfly() {
-            const butterfly = document.createElement('div');
-            butterfly.className = 'butterfly';
-            document.body.appendChild(butterfly);
-
-            const startX = Math.random() < 0.5 ? -20 : window.innerWidth + 20;
-            const startY = Math.random() * window.innerHeight;
-            const endX = startX < 0 ? window.innerWidth + 20 : -20;
-            const endY = Math.random() * window.innerHeight;
-
-            butterfly.style.left = `${startX}px`;
-            butterfly.style.top = `${startY}px`;
-
-            const duration = Math.random() * 10000 + 5000; // 5-15 seconds
-            const delay = Math.random() * 5000; // 0-5 seconds delay
-
-            butterfly.animate([
-                { left: `${startX}px`, top: `${startY}px`, opacity: 0 },
-                { opacity: 0.7, offset: 0.1 },
-                { opacity: 0.7, offset: 0.9 },
-                { left: `${endX}px`, top: `${endY}px`, opacity: 0 }
-            ], {
-                duration: duration,
-                easing: 'ease-in-out',
-                delay: delay
-            });
-
-            butterfly.animate([
-                { transform: 'translateY(0) rotate(0deg)' },
-                { transform: 'translateY(-5px) rotate(5deg)' },
-                { transform: 'translateY(5px) rotate(-5deg)' },
-                { transform: 'translateY(0) rotate(0deg)' }
-            ], {
-                duration: 1000,
-                iterations: Math.ceil(duration / 1000),
-                easing: 'ease-in-out',
-                delay: delay
-            });
+        // Flower Sparkle Effect
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = '🌸';
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.fontSize = Math.random() * (24 - 12) + 12 + 'px';
+            document.body.appendChild(sparkle);
 
             setTimeout(() => {
-                butterfly.remove();
-            }, duration + delay);
+                sparkle.remove();
+            }, 4000);
         }
 
-        // Create butterflies periodically
-        setInterval(createButterfly, 2000);
+        setInterval(createSparkle, 300);
 
-        // Animate skill levels
-        function animateSkillLevels() {
-            const skillLevels = document.querySelectorAll('.skill-level');
-            skillLevels.forEach(level => {
-                const width = level.style.width;
-                level.style.width = '0%';
-                setTimeout(() => {
-                    level.style.width = width;
-                }, 500);
-            });
-        }
+        // Navbar Scroll Hide/Show
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const navbar = document.querySelector('.navbar');
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                navbar.classList.add('hidden');
+            } else {
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
 
-        // Intersection Observer for fade-in effect
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('nav ul');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Scroll Animation for Cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 1s forwards';
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, observerOptions);
 
-        document.querySelectorAll('h2, .skill-card, .achievement-card, .project-card, .contact form').forEach(el => {
+        document.querySelectorAll('.skill-card, .project-card, .achievement-card').forEach(el => {
             observer.observe(el);
         });
 
-        // Animate skill levels when skills section is in view
-        const skillsSection = document.querySelector('#skills');
-        const skillsObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                animateSkillLevels();
-                skillsObserver.unobserve(skillsSection);
-            }
-        }, { threshold: 0.5 });
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-        skillsObserver.observe(skillsSection);
-
-        // Form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+        // Form Submission Animation
+        document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Here you would typically send the form data to a server
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
+            const button = this.querySelector('button');
+            button.innerHTML = '✨ Sent!';
+            button.style.background = 'var(--secondary)';
+            setTimeout(() => {
+                button.innerHTML = 'Send Message';
+                button.style.background = 'var(--gradient)';
+                this.reset();
+            }, 2000);
         });
     </script>
 </body>
 </html>
-
+Last edite
